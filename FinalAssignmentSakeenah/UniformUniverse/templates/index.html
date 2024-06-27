@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniform Universe • IKS.my | Portal Perniagaan Anda</title>
+    {% load static %}<link rel="stylesheet" href="{% static "UniformUniverse/styling.css" %}">
+    {% load static %}<link rel="icon" href="{% static "UniformUniverse/uniform_logo (2).png" %}">
+</head>
+
+<body>
+
+    <header>
+
+        <!-- header bar -->
+        <div id="row1">FREE SHIPPING FOR ALL ORDERS</div>
+        <div id="row2">
+            <p id="demo"></p>
+        </div>
+
+        <!-- navigation bar -->
+        <div class="nav-container">
+            <div class="logo">
+                <a href="/UniformUniverse/">{% load static %}<img src="{% static "UniformUniverse/uniform_logo (2).png" %}" width="80px" height="60px"></a>
+            </div>
+
+            <nav class="nav-bar">
+                <ul>
+                    <li class="brand">Uniform Universe</li>
+                    <li><a href="sign_up">Sign Up</a></li> 
+                    <li><a href="{% url 'sign_in_page' %}">Sign In</a></li> 
+                    <li><a href="#"></a></li>
+                </ul>
+            </nav>
+        </div>
+          
+    </header>
+    
+
+    <div id="row3">
+        <div class="image-container">
+
+        <div class="content">
+            <div class="content-box">
+                <label>BUY THE BEST WORK UNIFORM</label>
+                <br>
+                <a href="sign_up">New User?</a> 
+                <br>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- newletter -->
+    <section id="newsletter">
+        <div class="newstext">
+            <h4>Sign Up For Newsletter</h4>
+            <p>Get E-mail updates about our latest shop and <span>special offers.</span>
+            </p>
+        </div>
+        <div class="form">
+            <input type="text"id="emailInput" placeholder="Your e-mail address">
+            <button class="normal" onclick="displayInput()">Sign Up</button>
+        </div>
+    </section>
+
+    <!-- footer -->
+    <footer id="footer">
+        <div class="col">
+            <br>
+            {% load static %}<img class="logo" src="{% static "UniformUniverse/uniform_logo (2).png" %}" width="150" height="120">
+            <br>
+            <h4>Contact Us</h4>
+            <p><strong>Phone:</strong> +01 222 2365/(+60) 12 678 9987</p>
+            <p><strong>Operation Hours:</strong> 10:00 - 18:00, Mon - Sat</p>
+            <p><strong>E-mail:</strong> uniformuniverse@gmail.com</p>
+        </div>
+
+        <div class="col">
+            <h4>About</h4>
+            <a href="#">About Us</a>
+            <a href="#">Delivery Information</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms & Conditions</a>
+        </div>
+    </footer>
+
+    {% load static %}<script src="{% static "UniformUniverse/script.js" %}"></script>
+
+</body>
+</html>

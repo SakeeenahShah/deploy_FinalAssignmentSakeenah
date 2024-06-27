@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniform Universe • IKS.my | Portal Perniagaan Anda</title>
+    {% load static %}<link rel="stylesheet" href="{% static "UniformUniverse/styling.css" %}">
+    {% load static %}<link rel="icon" href="{% static "UniformUniverse/uniform_logo (2).png" %}">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        #row3 {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: #333333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    
+        .button-container form {
+            margin: 0; 
+        }
+        .btn.small-btn {
+            padding: 5px 10px;
+            font-size: 13px;
+            margin-bottom: 35px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+
+        <!-- header bar -->
+        <div id="row1">FREE SHIPPING FOR ALL ORDERS</div>
+        <div id="row2">
+            <p id="demo"></p>
+        </div>
+
+        <!-- navigation bar -->
+        <div class="nav-container">
+            <div class="logo">
+                <a href="{% url 'homepage' %}"><img src="{% static 'UniformUniverse/uniform_logo (2).png' %}" width="80px" height="60px"></a>
+            </div>
+
+            <nav class="nav-bar">
+                <ul>
+                    <li class="brand">Uniform Universe</li>
+
+                    <li><a href="{% url 'homepage' %}">Home</a></li> 
+                    <li><a href="{% url 'myorder' %}">My Order</a></li>  
+                    <li class="dropdown">
+                        <a href="#" class="dropbtn">My Account</a>
+                        <div class="dropdown-content">
+                            <a href="{% url 'profile' %}">Profile</a>
+                            <a href="/UniformUniverse/">Sign Out</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+          
+    </header>
+
+    <div id="row3">
+        <h2>Review Details</h2>
+        <p><strong>Order ID:</strong> {{ order.OrderID }}</p>
+        
+        {% if review %}
+            <p><strong>Description:</strong> {{ review.Description }}</p>
+            <p><strong>Date:</strong> {{ review.Date }}</p>
+            <form action="{% url 'review_detail' order.OrderID %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" id="review_id" name="review_id" value="{{ review.id }}">
+                <label for="review_id_input">Enter Review ID:</label><br>
+                <input type="text" id="review_id_input" name="review_id_input"><br>
+                
+                <label for="description">Update Description:</label><br>
+                <textarea id="description" name="description" rows="4" cols="50">{{ review.Description }}</textarea><br>
+                
+                <label for="review_date">Date:</label><br>
+                <input type="date" id="review_date" name="review_date" value="{{ review.Date|date:'Y-m-d' }}"><br><br>
+                
+                <button type="submit">Update Review</button>
+                {% if error %}
+                    <p class="error">{{ error }}</p>
+                {% endif %}
+            </form>
+                        
+            <form action="{% url 'delete_review' order.OrderID %}" method="post" style="margin-top: 20px;">
+                {% csrf_token %}
+                <button type="submit" style="background-color: red;">Delete Review</button>
+            </form>
+        {% else %}
+            <p><strong>No review made yet.</strong></p>
+            <form action="{% url 'review_detail' order.OrderID %}" method="post">
+                {% csrf_token %}
+                <label for="review_id_input">Enter Review ID:</label><br>
+                <input type="text" id="review_id_input" name="review_id_input"><br>
+                
+                <label for="description">New Review:</label><br>
+                <textarea id="description" name="description" rows="4" cols="50"></textarea><br>
+                
+                <label for="review_date">Date:</label><br>
+                <input type="date" id="review_date" name="review_date" value="{{ date.today|date:'Y-m-d' }}"><br><br>
+                
+                <button type="submit">Submit Review</button>
+                {% if error %}
+                    <p class="error">{{ error }}</p>
+                {% endif %}
+            </form>
+        {% endif %}
+        <br>
+
+        <div class="button-container">
+        <!-- Link to view uniform reviews -->
+        <a href="{% url 'uniform_reviews' order.UniformID.UniformID %}"><button type="submit" style="background-color: rgb(31, 31, 34);">View Uniform Reviews</button></a>
+        <br>
+        <a href="{% url 'myorder' %}"><button type="submit" style="background-color: rgb(14, 160, 62);">Back to My Orders</button></a>
+        </div>
+    </div>
+
+    <!-- newletter -->
+    <section id="newsletter">
+        <div class="newstext">
+            <h4>Sign Up For Newsletter</h4>
+            <p>Get E-mail updates about our latest shop and <span>special offers.</span>
+            </p>
+        </div>
+        <div class="form">
+            <input type="text"id="emailInput" placeholder="Your e-mail address">
+            <button class="normal" onclick="displayInput()">Sign Up</button>
+        </div>
+    </section>
+
+    <!-- footer -->
+    <footer id="footer">
+        <div class="col">
+            <br>
+            <img class="logo" src="{% static 'UniformUniverse/uniform_logo (2).png' %}" width="150" height="120">
+            <br>
+            <h4>Contact Us</h4>
+            <p><strong>Phone:</strong> +01 222 2365/(+60) 12 678 9987</p>
+            <p><strong>Operation Hours:</strong> 10:00 - 18:00, Mon - Sat</p>
+            <p><strong>E-mail:</strong> uniformuniverse@gmail.com</p>
+        </div>
+
+        <div class="col">
+            <h4>About</h4>
+            <a href="#">About Us</a>
+            <a href="#">Delivery Information</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms & Conditions</a>
+        </div>
+    </footer>
+
+    {% load static %}
+    <script src="{% static "UniformUniverse/script.js" %}"></script>
+
+</body>
+</html>

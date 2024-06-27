@@ -1,0 +1,1 @@
+web: gunicorn FinalAssignmentSakeenah.wsgi --log-file -

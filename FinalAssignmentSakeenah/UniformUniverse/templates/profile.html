@@ -1,0 +1,181 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniform Universe • Profile</title>
+    <link rel="stylesheet" href="{% static 'UniformUniverse/styling.css' %}">
+    <link rel="icon" href="{% static 'UniformUniverse/uniform_logo (2).png' %}">
+    <style>
+        .btn.small-btn {
+            padding: 5px 10px;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+    
+        .form-group {
+            margin-bottom: 30px; 
+        }
+    
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    
+        .button-container form {
+            margin: 0; 
+        }
+
+        .button-container .btn-back {
+            margin-left: auto;
+        }
+    
+        .btn-danger {
+            background-color: rgb(215, 6, 6);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <!-- Navigation bar -->
+    <div class="nav-container">
+        <div class="logo">
+            <a href="{% url 'homepage' %}"><img src="{% static 'UniformUniverse/uniform_logo (2).png' %}" width="80px" height="60px"></a>
+        </div>
+
+        <nav class="nav-bar">
+            <ul>
+                <li class="brand">Uniform Universe</li>
+                <li><a href="{% url 'homepage' %}">Home</a></li> 
+                <li><a href="{% url 'myorder' %}">My Order</a></li>  
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">My Account</a>
+                    <div class="dropdown-content">
+                        <a href="{% url 'profile' %}">Profile</a>
+                        <a href="/UniformUniverse/">Sign Out</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </div> 
+</header>
+
+<div class="registration-form">
+    <div class="form-container">
+        <div class="registration-box">
+            <h2>Profile Information</h2>
+            
+            <div class="form-group">
+                <label for="CustomerID">Customer ID:</label>
+                <input type="text" id="CustomerID" name="CustomerID" class="form-input" value="{{ customer.CustomerID }}" disabled>
+            </div>
+        
+            <div class="form-group">
+                <label for="Email">Email:</label>
+                <input type="email" id="Email" name="Email" class="form-input" value="{{ customer.Email }}" disabled>
+            </div>
+        
+            <div class="form-group">
+                <label for="Password">Password:</label>
+                <div class="password-container">
+                    <input type="password" id="Password" name="Password" class="form-input" value="{{ customer.Password }}" disabled>
+                    <button type="button" id="togglePassword" class="toggle-btn">Show</button>
+                </div>
+            </div>            
+            
+            <!-- Update CustomerName -->
+            <form method="post" action="{% url 'update_customername' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="CustomerName">Name:</label>
+                    <input type="text" id="CustomerName" name="CustomerName" class="form-input" value="{{ customer.CustomerName }}">
+                </div>
+                <button type="submit" class="btn small-btn">Update Name</button>
+            </form>
+        
+            <!-- Update PhoneNo -->
+            <form method="post" action="{% url 'update_phoneno' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="PhoneNo">Phone Number:</label>
+                    <input type="text" id="PhoneNo" name="PhoneNo" class="form-input" value="{{ customer.PhoneNo }}">
+                </div>
+                <button type="submit" class="btn small-btn">Update Phone Number</button>
+            </form>
+
+            <!-- Update Address -->
+            <form method="post" action="{% url 'update_address' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="Address">Address:</label>
+                    <textarea id="Address" name="Address" class="form-textarea" rows="4">{{ customer.Address }}</textarea>
+                </div>
+                <div class="button-container">
+                    <button type="submit" class="btn small-btn">Update Address</button>
+                    <a href="{% url 'homepage' %}" class="btn small-btn btn-back" style="background-color: rgb(77, 133, 97); margin-right: 20px;">Back to Home</a>
+                </div>
+            </form>
+
+            <!-- Delete Account -->
+            <form method="post" action="{% url 'delete_account' %}" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+                {% csrf_token %}
+                <button type="submit" class="btn small-btn btn-danger" style="background-color: rgb(215, 6, 6);">Delete Account</button>
+            </form>
+
+        </div>        
+    </div>
+</div>
+
+ <!-- newsletter -->
+ <section id="newsletter">
+    <div class="newstext">
+        <h4>Sign Up For Newsletter</h4>
+        <p>Get E-mail updates about our latest shop and <span>special offers.</span>
+        </p>
+    </div>
+    <div class="form">
+        <input type="text" id="emailInput" placeholder="Your e-mail address">
+        <button class="normal" onclick="displayInput()">Sign Up</button>
+    </div>
+</section>
+
+<!-- footer -->
+<footer id="footer">
+    <div class="col">
+        <br>
+        <img class="logo" src="{% static 'UniformUniverse/uniform_logo (2).png' %}" width="150" height="120">
+        <br>
+        <h4>Contact Us</h4>
+        <p><strong>Phone:</strong> +01 222 2365/(+60) 12 678 9987</p>
+        <p><strong>Operation Hours:</strong> 10:00 - 18:00, Mon - Sat</p>
+        <p><strong>E-mail:</strong> uniformuniverse@gmail.com</p>
+    </div>
+
+    <div class="col">
+        <h4>About</h4>
+        <a href="#">About Us</a>
+        <a href="#">Delivery Information</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms & Conditions</a>
+    </div>
+</footer>
+
+<script src="{% static "UniformUniverse/script.js" %}"></script>
+<script>
+    document.getElementById('togglePassword').addEventListener('click', function (e) {
+        const passwordInput = document.getElementById('Password');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            this.textContent = 'Hide';
+        } else {
+            passwordInput.type = 'password';
+            this.textContent = 'Show';
+        }
+    });
+</script>
+
+</body>
+</html>

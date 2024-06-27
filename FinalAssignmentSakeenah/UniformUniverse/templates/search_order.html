@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniform Universe • IKS.my | Portal Perniagaan Anda</title>
+    {% load static %}<link rel="stylesheet" href="{% static "UniformUniverse/styling.css" %}">
+    {% load static %}<link rel="icon" href="{% static "UniformUniverse/uniform_logo (2).png" %}">
+    <style>
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .data {
+            margin-top: 10px;
+            line-height: 25px;
+            width: 100%;
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 4px 8px;
+            border: none;
+            cursor: pointer;
+            background-color: rgb(226, 232, 232);
+            margin-top: 10px; 
+            margin-bottom: 60px;
+        }
+
+        .btn:hover {
+            background-color: #d5e1ea;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+
+        <!-- header bar -->
+        <div id="row1">FREE SHIPPING FOR ALL ORDERS</div>
+        <div id="row2">
+            <p id="demo"></p>
+        </div>
+
+        <!-- navigation bar -->
+        <div class="nav-container">
+            <div class="logo">
+                <a href="{% url 'homepage' %}"><img src="{% static 'UniformUniverse/uniform_logo (2).png' %}" width="80px" height="60px"></a>
+            </div>
+
+            <nav class="nav-bar">
+                <ul>
+                    <li class="brand">Uniform Universe</li>
+
+                    <li><a href="{% url 'homepage' %}">Home</a></li> 
+                    <li><a href="{% url 'myorder' %}">My Order</a></li>  
+                    <li class="dropdown">
+                        <a href="#" class="dropbtn">My Account</a>
+                        <div class="dropdown-content">
+                            <a href="{% url 'profile' %}">Profile</a>
+                            <a href="/UniformUniverse/">Sign Out</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+          
+    </header>
+
+    <div id="row3">
+
+        <!-- page header -->
+        <section id="page-header">
+            <h2 style="font-size: 26pt;">Search Order</h2>
+        </section>
+    
+        <h2 style="font-size: 22pt; margin-left: 70px; margin-top: 80px;"></h2>
+        <div class="container">
+            <h2>Search Order</h2>
+            <form action="{% url 'search_order' %}" method="get">
+                Enter Order ID: <input type="text" name="c_OrderID">
+                <input type="submit" value="SEARCH">
+            </form>
+            <br><br>
+    
+            {% if data %}
+                <div class="data" style="margin-top: 20px;">
+                    {% for order in data %}
+                        OrderID: {{ order.OrderID }} <br>
+                        CustomerName: {{ order.CustomerID.CustomerName }} <br>
+                        Address: {{ order.CustomerID.Address }} <br>
+                        UniformName: {{ order.UniformID.UniformName }} <br>
+                        Price: RM {{ order.UniformID.Price }} <br>
+                        Quantity: {{ order.Quantity }} <br>
+                        Total Price: RM {{ order.Total_Price }} <br>
+                        Status: {{ order.Status }} <br><br>
+                    {% endfor %}
+                </div>
+            {% elif msg %}
+                <p>{{ msg }}</p>
+            {% endif %}
+    
+            <!-- Button to go back to myorder.html -->
+            <a href="{% url 'myorder' %}" class="btn">Back to My Orders</a>
+    
+        </div>
+    
+    </div>
+
+    <!-- newletter -->
+    <section id="newsletter">
+        <div class="newstext">
+            <h4>Sign Up For Newsletter</h4>
+            <p>Get E-mail updates about our latest shop and <span>special offers.</span>
+            </p>
+        </div>
+        <div class="form">
+            <input type="text"id="emailInput" placeholder="Your e-mail address">
+            <button class="normal" onclick="displayInput()">Sign Up</button>
+        </div>
+    </section>
+
+    <!-- footer -->
+    <footer id="footer">
+        <div class="col">
+            <br>
+            <img class="logo" src="{% static 'UniformUniverse/uniform_logo (2).png' %}" width="150" height="120">
+            <br>
+            <h4>Contact Us</h4>
+            <p><strong>Phone:</strong> +01 222 2365/(+60) 12 678 9987</p>
+            <p><strong>Operation Hours:</strong> 10:00 - 18:00, Mon - Sat</p>
+            <p><strong>E-mail:</strong> uniformuniverse@gmail.com</p>
+        </div>
+
+        <div class="col">
+            <h4>About</h4>
+            <a href="#">About Us</a>
+            <a href="#">Delivery Information</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms & Conditions</a>
+        </div>
+    </footer>
+
+    {% load static %}
+    <script src="{% static "UniformUniverse/script.js" %}"></script>
+
+</body>
+</html>
